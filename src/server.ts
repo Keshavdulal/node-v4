@@ -3,6 +3,8 @@ import morgan from "morgan";
 import cors from "cors";
 
 import router from "./router";
+import { protect } from "./modules/auth";
+import { createNewUser, signin } from "./handlers/users";
 
 const app = express();
 
@@ -35,6 +37,13 @@ app.get("/", (req, res) => {
   res.json({ message: "Hello from Express" });
 });
 
-app.use("/api", router);
+//
+
+// Protect is the authenticator token checker
+app.use("/api", protect, router);
+
+// PUBLIC ROUTES or UNAUTHENTICATED ROUTES
+app.post("/user", createNewUser);
+app.post("/signin", signin);
 
 export default app;
