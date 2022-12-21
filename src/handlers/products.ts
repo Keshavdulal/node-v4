@@ -1,6 +1,27 @@
 // Product Handlers
 import prisma from "../db";
 
+// ---------------------------- CREATE ----------------------------
+
+export const createProduct = async (req, res, next) => {
+  try {
+    const product = await prisma.product.create({
+      data: {
+        name: req.body.name,
+        belongsToId: req.user.id,
+      },
+    });
+
+    // return the created product
+    res.json({ data: product });
+  } catch (error) {
+    // all errors default to 500
+    next(error);
+  }
+};
+
+// ---------------------------- READ ----------------------------
+
 // GET ALL
 export const getProducts = async (req, res) => {
   // get full user info from db based on user id
@@ -47,22 +68,7 @@ export const getOneProduct = async (req, res) => {
   res.json({ data: product });
 };
 
-export const createProduct = async (req, res) => {
-  const product = await prisma.product.create({
-    data: {
-      name: req.body.name,
-      belongsToId: req.user.id,
-
-      // alternative way - rarely used
-      // belongsTo: {
-      // matchOrAssociateOrSomething: req.user.id
-      // }
-    },
-  });
-
-  // return the created product
-  res.json({ data: product });
-};
+// ---------------------------- UPDATE ----------------------------
 
 export const updateProduct = async (req, res) => {
   // look for product with req.params.id
@@ -85,6 +91,8 @@ export const updateProduct = async (req, res) => {
   // send back the updated product
   res.json({ data: updated });
 };
+
+// ---------------------------- DELETE ----------------------------
 
 export const deleteProduct = async (req, res) => {
   const deleted = await prisma.product.delete({
