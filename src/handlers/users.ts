@@ -44,6 +44,8 @@ export const signin = async (req, res) => {
   if (!isValidPwd) {
     res.status(401);
     res.json({ message: "Username and password do not match" });
+
+    return;
   }
 
   // send back JWT token to valid user

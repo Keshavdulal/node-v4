@@ -16,6 +16,8 @@ export const createJWT = (user) => {
 
 export const protect = (req, res, next) => {
   const bearer = req.headers.authorization;
+  // console.log("@protect - bearer", bearer);
+
   if (!bearer) {
     res.status(401);
     res.json({ message: "Not Authorized" });
@@ -33,6 +35,8 @@ export const protect = (req, res, next) => {
 
   try {
     const user = jwt.verify(token, process.env.JWT_SECRET);
+
+    // attach legit user info in the req obj for subsequent usage (& not rely on user inputs)
     req.user = user;
     next();
   } catch (error) {
