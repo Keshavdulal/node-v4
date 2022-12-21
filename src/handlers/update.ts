@@ -30,6 +30,7 @@ export const createUpdate = async (req, res) => {
 };
 
 // ---------------------------- READ ----------------------------
+
 // GET ALL
 export const getAllUpdates = async (req, res) => {
   // first - get all products for the current user

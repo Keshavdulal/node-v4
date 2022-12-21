@@ -1,6 +1,8 @@
 import prisma from "../db";
 import { comparePasswords, createJWT, hashPassword } from "../modules/auth";
 
+// ---------------------------- CREATE ----------------------------
+
 export const createNewUser = async (req, res, next) => {
   // Create user using prima sdk and store it in db
   // Store created user locally too for next step
@@ -24,6 +26,8 @@ export const createNewUser = async (req, res, next) => {
   }
 };
 
+// ---------------------------- READ ----------------------------
+
 export const signin = async (req, res) => {
   // Need username & password to proceed
   // Check validity of username first
@@ -36,14 +40,6 @@ export const signin = async (req, res) => {
       username: req.body.username,
     },
   });
-
-  console.log(
-    "@signin",
-    req.body.username,
-    req.body.password,
-    user.username,
-    user.password
-  );
 
   const isValidPwd = await comparePasswords(req.body.password, user.password);
 

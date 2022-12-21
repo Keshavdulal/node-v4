@@ -8,7 +8,7 @@ import { createNewUser, signin } from "./handlers/users";
 
 const app = express();
 
-//** ----------------------------------- MIDDLEWARES ----------------------------------- */
+// ----------------------------------- MIDDLEWARES -----------------------------------
 app.use(cors()); // allow cross-origin requests from browsers
 app.use(morgan("dev")); // logger
 
@@ -29,7 +29,7 @@ app.use((req, res, next) => {
   // res.send("Not Allowed");
 });
 
-//** ----------------------------------- ROUTE HANDLERS ----------------------------------- */
+// ----------------------------------- ROUTE HANDLERS -----------------------------------
 
 app.get("/", (req, res, next) => {
   console.log("Hello from Express");
@@ -54,7 +54,7 @@ app.use("/api", protect, router);
 app.post("/user", createNewUser);
 app.post("/signin", signin);
 
-//** ----------------------------------- ERROR HANDLERS MW ----------------------------------- */
+// ----------------------------------- ERROR HANDLERS MW -----------------------------------
 
 // Generic SYNC Error Handler Middleware
 // - Catches errors thrown by routes, handler and other middlewares above it
@@ -74,6 +74,6 @@ app.use((err, req, res, next) => {
   }
 });
 
-//** ----------------------------------- EXPORTS ----------------------------------- */
+// ----------------------------------- EXPORTS -----------------------------------
 
 export default app;
