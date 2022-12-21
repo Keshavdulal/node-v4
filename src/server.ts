@@ -28,22 +28,52 @@ app.use((req, res, next) => {
   // res.status(401);
   // res.send("Not Allowed");
 });
-//** ----------------------------------- MIDDLEWARES ----------------------------------- */
 
-app.get("/", (req, res) => {
+//** ----------------------------------- ROUTE HANDLERS ----------------------------------- */
+
+app.get("/", (req, res, next) => {
   console.log("Hello from Express");
+
+  // SYNC Error
+  // throw new Error("Error!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+  // ASYNC Error
+  // setTimeout(() => {
+  //   // next here is -> our error handler at the end
+  //   next(new Error("ASYNC Error!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"));
+  // }, 10);
 
   res.status(200);
   res.json({ message: "Hello from Express" });
 });
 
-//
-
-// Protect is the authenticator token checker
+// AUTHENTICATED PRIVATE ROUTES
 app.use("/api", protect, router);
 
-// PUBLIC ROUTES or UNAUTHENTICATED ROUTES
+// UNAUTHENTICATED PUBLIC ROUTES
 app.post("/user", createNewUser);
 app.post("/signin", signin);
+
+//** ----------------------------------- ERROR HANDLERS MW ----------------------------------- */
+
+// Generic SYNC Error Handler Middleware
+// - Catches errors thrown by routes, handler and other middlewares above it
+// - prevents server crash
+// - doesn't catch anything below it, so put it at bottom
+// - doesn't catch ASYNC errors
+app.use((err, req, res, next) => {
+  console.error(err);
+  // res.json({ message: `There was an error\n${err.message}` });
+
+  if (err.type === "auth") {
+    res.status(401).json({ message: "Unauthorized" });
+  } else if (err.type === "input") {
+    res.status(400).json({ message: "Invalid User Input" });
+  } else {
+    res.status(500).json({ message: "Server Fault" });
+  }
+});
+
+//** ----------------------------------- EXPORTS ----------------------------------- */
 
 export default app;
