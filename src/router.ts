@@ -10,6 +10,14 @@ import {
   createProduct,
   deleteProduct,
 } from "./handlers/products";
+import {
+  getOneUpdate,
+  getAllUpdates,
+  createUpdate,
+  updateUpdate,
+  deleteUpdate,
+  getAllUpdatesByProduct,
+} from "./handlers/update";
 import { handleInputErrors } from "./modules/middleware";
 
 const router = Router();
@@ -18,7 +26,7 @@ const router = Router();
 router.get("/007", (req, res) => res.json({ message: req.shhhhh_secret }));
 
 /**
- * Product
+ * Product - CRUD
  */
 router.get("/product", getProducts);
 router.get("/product/:id", getOneProduct);
@@ -40,34 +48,35 @@ router.post(
 router.delete("/product/:id", deleteProduct);
 
 /**
- * Update
+ * Update - CRUD
  */
-router.get("/update", (req, res) => {});
-router.get("/update/:id", (req, res) => {});
-router.put(
-  "/update/:id",
-  body("title").optional().isString(),
-  body("body").optional().isString(),
-  // oneOf("status", [body("IN_PROGRESS"), body("SHIPPED"), body("DEPRECATED")]),
-  body("status").isIn(["IN_PROGRESS", "SHIPPED", "DEPRECATED"]),
-  body("version").optional(),
-  // body("asset").optional(),
-  handleInputErrors,
-  (req, res) => {}
-);
-
 router.post(
   "/update",
   body("title").exists().isString(),
   body("body").exists().isString(),
+  body("productId").exists().isString(),
   handleInputErrors,
-  (req, res) => {}
+  createUpdate
 );
 
-router.delete("/update/:id", (req, res) => {});
+router.get("/update/:id", getOneUpdate);
+router.get("/update/", getAllUpdates); //
+router.get("/update/product/:id", getAllUpdatesByProduct); //
+
+router.put(
+  "/update/:id",
+  body("title").optional().isString(),
+  body("body").optional().isString(),
+  body("status").isIn(["IN_PROGRESS", "SHIPPED", "DEPRECATED"]),
+  body("version").optional(),
+  handleInputErrors,
+  updateUpdate
+);
+
+router.delete("/update/:id", deleteUpdate);
 
 /**
- * Update Point
+ * Update Point - CRUD
  */
 router.get("/updatepoint", (req, res) => {});
 router.get("/updatepoint/:id", (req, res) => {});
