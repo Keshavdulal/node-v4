@@ -15,7 +15,6 @@ export const createNewUser = async (req, res) => {
   });
 
   const token = createJWT(user);
-
   res.json({ token });
 };
 
@@ -24,7 +23,7 @@ export const signin = async (req, res) => {
   // Check validity of username first
   // Only then check validity of password (with hashed pwd in db)
   // Create token if valid else 401
-  // Send token back
+  // Send JWT back
 
   const user = await prisma.user.findUnique({
     where: {
@@ -42,8 +41,12 @@ export const signin = async (req, res) => {
 
   const isValidPwd = await comparePasswords(req.body.password, user.password);
 
-  if (isValidPwd) {
+  if (!isValidPwd) {
     res.status(401);
     res.json({ message: "Username and password do not match" });
   }
+
+  // send back JWT token to valid user
+  const token = createJWT(user);
+  res.json({ token });
 };

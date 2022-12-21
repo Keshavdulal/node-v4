@@ -45,12 +45,12 @@ export const protect = (req, res, next) => {
 };
 
 export const hashPassword = (password) => {
-  const salt = 777;
+  const saltRounds = 5;
   // this is async and returns promise by def
-  return bcrypt.hash(password, salt);
+  return bcrypt.hash(password, saltRounds);
 
   // use this to do it sync
-  return bcrypt.hashSync(password, "saltysalt");
+  // return bcrypt.hashSync(password, "saltysalt");
 };
 
 export const comparePasswords = (password, hash) => {

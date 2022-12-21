@@ -2,13 +2,13 @@ import { Router } from "express";
 
 const router = Router();
 
+// USAGE -> router.method('path', handler)
+router.get("/007", (req, res) => res.json({ message: req.shhhhh_secret }));
+
 /**
  * Product
  */
-router.get("/product", (req, res) => {
-  // res.json({message:'hello'})
-  res.json({ message: req.shhhhh_secret });
-});
+router.get("/product", (req, res) => {});
 router.get("/product/:id", () => {});
 router.put("/product/:id", () => {});
 router.post("/product", () => {});
