@@ -99,4 +99,10 @@ router.post(
 
 router.delete("/updatepoint/:id", (req, res) => {});
 
+// ------------------------------ Subhandler level error handler ------------------------------
+router.use((err, req, res, next) => {
+  // just call top level error handler
+  next(err);
+});
+
 export default router;
