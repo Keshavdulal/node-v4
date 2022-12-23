@@ -48,7 +48,7 @@ router.post(
 router.delete("/product/:id", deleteProduct);
 
 /**
- * Update - CRUD
+w * Update - CRUD
  */
 router.post(
   "/update",

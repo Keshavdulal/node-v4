@@ -74,23 +74,23 @@ app.use((err, req, res, next) => {
   }
 });
 
-// ----------------------------------------------------------------------
+// ----------------------------- ERROR HANDLING OUTSIDE EXPRESS ------------------------------------
 // Handling errors coming outside express i.e. node
-setTimeout(() => {
-  throw new Error("OOPS!!! outside express");
-}, 100);
+// setTimeout(() => {
+//   throw new Error("OOPS!!! outside express");
+// }, 100);
 
-// Sync Error
-process.on("uncaughtException", (err) => {
-  console.error("@uncaughtException");
-  console.error(err);
-});
+// // Sync Error
+// process.on("uncaughtException", (err) => {
+//   console.error("@uncaughtException");
+//   console.error(err);
+// });
 
-// Async Error
-process.on("unhandledRejection", (err) => {
-  console.error("@unhandledRejection");
-  console.error(err);
-});
+// // Async Error
+// process.on("unhandledRejection", (err) => {
+//   console.error("@unhandledRejection");
+//   console.error(err);
+// });
 
 // ----------------------------------- EXPORTS -----------------------------------
 
