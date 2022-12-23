@@ -6,6 +6,7 @@ const stage = process.env.STAGE || "local";
 
 let envConfig;
 
+// Swap configs based on env
 if (stage === "produciton") {
   envConfig = require("./prod").default;
 } else if (stage === "testing") {
@@ -14,6 +15,7 @@ if (stage === "produciton") {
   envConfig = require("./local").default;
 }
 
+// Have some defaults by default - lol
 const defaultConfig = {
   stage,
   env: process.env.NODE_ENV,
@@ -25,4 +27,5 @@ const defaultConfig = {
   logging: false,
 };
 
+// Override defaults by current env's config
 export default merge(defaultConfig, envConfig);
